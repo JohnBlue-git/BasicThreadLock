@@ -18,7 +18,7 @@ void count(unsigned int id) {
     //
     key.lock();
     
-    std::cout << "thread id: " << id << ", i = " << i++ << std::endl;
+    cout << "thread id: " << id << ", i = " << i++ << endl;
     
     key.unlock();
     //
