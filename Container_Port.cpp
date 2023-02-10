@@ -2,7 +2,9 @@
 Auther: John Blue
 Time: 2023/2
 Platform: CodeChef IDE
-Object: utilizing pthread to simulate Container Port Problem
+Object: Utilizing pthread to simulate Container Port Problem.
+        Container ship port problem is a logistic problem that ships would have to be loaded and unloaded in the port units
+        , and the number of ships and port units will greatly effect whether the shipping will reach on time.
 */
 
 //
