@@ -1,5 +1,7 @@
 /*
-
+Auther: John Blue
+Time: 2023/2
+Object: demonstrate usage of conditional variable in c++ thread (the following threads will excecute one by one with help of conditional variable)
 */
 
 #include <iostream>
