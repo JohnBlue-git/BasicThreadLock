@@ -1,5 +1,7 @@
 /*
-
+Auther: John Blue
+Time: 2023/2
+Object: demonstrate usage of semaphore in c++ thread (but C++ thread don;t have semphore, we have to bulid it with mutex & conditional variable)
 */
 
 #include <iostream>
