@@ -1,5 +1,7 @@
 /*
-
+Auther: John Blue
+Time: 2023/2
+Object: demonstrate usage of mutex in c++ thread (for preventing race condition on variavble i)
 */
 
 #include <iostream>
