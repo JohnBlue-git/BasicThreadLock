@@ -97,6 +97,9 @@ void port_thread(porting* prt, unsigned int* ret) {
     unique_lock<mutex>* key = new unique_lock<mutex>(prt->m);
     while (prt->unit < 0 || queue_me != prt->queue_head)
     {
+        // 暫時先用這個替代 等待時間
+        *ret += 3;
+        
         // it will release mutex lock and wait for signal or broadcast
         // FIFO policy
         prt->cond.wait(*key);
@@ -265,14 +268,14 @@ int main()
     unsigned int port_B_unit = 0;
     
     // assign port units
-    port_A_unit = 10;
-    port_B_unit = 10;
+    port_A_unit = 4;
+    port_B_unit = 4;
     // sub main
     sub_main(ship_span, port_span, deadline, port_A_unit, port_B_unit);
 
     // assign port units
-    port_A_unit = 1;
-    port_B_unit = 1;
+    port_A_unit = 20;
+    port_B_unit = 20;
     // sub main
     sub_main(ship_span, port_span, deadline, port_A_unit, port_B_unit);
 
