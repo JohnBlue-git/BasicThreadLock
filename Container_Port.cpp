@@ -228,6 +228,8 @@ void sub_main(unsigned int ship_span, unsigned int port_span, unsigned int deadl
         // mission_list
         mission_list[i] = new Route*;
         mission_list[i][0] = create_Route(ship_name[i], A_to_B, A, B, deadline);
+        // 比較合理 create one at a time
+        this_thread::sleep_for(chrono::milliseconds(1));
     }
     
     // threads start
