@@ -1,10 +1,8 @@
 /*
 Auther: John Blue
 Time: 2023/2
-Platform: CodeChef IDE
-Object: Utilizing thread to simulate Container Port Problem.
-        Container ship port problem is a logistic problem that ships would have to be loaded and unloaded in the port units
-        , and the number of ships and port units will greatly effect whether the shipping will reach on time.
+Platform: CodeChef IDE / Onlinegdb's online_c++_debugger
+Object: utilizing pthread to simulate Container Port Problem
 */
 
 //
@@ -104,7 +102,6 @@ void port_thread(porting* prt, unsigned int* ret) {
         prt->cond.wait(*key);
     }
     prt->unit--;// deduct number of available units
-    
     delete key;
     //
     // critical section end
@@ -115,8 +112,7 @@ void port_thread(porting* prt, unsigned int* ret) {
     //
     srand(time(NULL));
     unsigned int rt = prt->wait_time + rand() % 3;
-    this_thread::sleep_for(chrono::milliseconds(rt));
-    
+    this_thread::sleep_for(std::chrono::milliseconds(rt));
     
     //
     // critical section
@@ -143,7 +139,7 @@ void shipping_thread(unsigned int* span, unsigned int* ret) {
     
     srand(time(NULL));
     unsigned int rt = *span + rand() % 3;
-    this_thread::sleep_for(chrono::milliseconds(rt));//this_thread::sleep_for(std::chrono::milliseconds(3));
+    this_thread::sleep_for(chrono::milliseconds(rt));
     *ret += rt;
     
 }
@@ -169,7 +165,7 @@ void ship_thread(Route** mission) {
     //printf("Ship %s on Way %s : sailing\n", mission[0]->ship, mission[0]->way->way);
     th = thread(shipping_thread, &(mission[0]->way->span), &(mission[0]->sum));
     th.join();
-    cout << "Ship " << mission[0]->ship << " on Way " << mission[0]->way->way << " : reaching\n";
+    //cout << "Ship " << mission[0]->ship << " on Way " << mission[0]->way->way << " : reaching\n";
     
     //
     // unloading port period
@@ -199,7 +195,7 @@ void ship_thread(Route** mission) {
 
 void sub_main(unsigned int ship_span, unsigned int port_span, unsigned int deadline, unsigned int port_A_unit, unsigned int port_B_unit) {
     // define ships number
-    unsigned int ship_N = 12;
+    unsigned int ship_N = 9;
     char ship_name[12][3];
 
     // define route, ports
@@ -250,13 +246,13 @@ void sub_main(unsigned int ship_span, unsigned int port_span, unsigned int deadl
 
     
     // free allocated memory
-    delete A_to_B;
-    delete A;
-    delete B;
+    free(A_to_B);
+    free(A);
+    free(B);
     for(int i = 0; i < 3; i++) {
-        delete[] mission_list[i];
+        free(mission_list[i]);
     }
-    delete[] mission_list;
+    free(mission_list);
 }
 
 int main()
@@ -269,17 +265,16 @@ int main()
     unsigned int port_B_unit = 0;
     
     // assign port units
-    port_A_unit = 4;
-    port_B_unit = 4;
+    port_A_unit = 10;
+    port_B_unit = 10;
     // sub main
     sub_main(ship_span, port_span, deadline, port_A_unit, port_B_unit);
 
     // assign port units
-    port_A_unit = 2;
-    port_B_unit = 2;
+    port_A_unit = 1;
+    port_B_unit = 1;
     // sub main
     sub_main(ship_span, port_span, deadline, port_A_unit, port_B_unit);
 
     return 0;
 }
-
