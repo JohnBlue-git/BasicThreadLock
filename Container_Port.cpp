@@ -154,6 +154,12 @@ void ship_thread(Route** mission) {
     // thread
     thread th;
     
+    // time start
+    std::chrono::high_resolution_clock::time_point t0 = std::chrono::high_resolution_clock::now();
+    //
+    //typedef std::chrono::high_resolution_clock::time_point time_pot;// can work
+    //typedef std::chrono::duration_cast<std::chrono::milliseconds> dur_cast;//!!! nope this line not work
+    
     //
     // loading port period
     //
@@ -177,11 +183,18 @@ void ship_thread(Route** mission) {
     th = thread(port_thread, mission[0]->unloading_port, &(mission[0]->sum));
     th.join();
     cout << "Ship " << mission[0]->ship << " at Port " << mission[0]->unloading_port->port << " : shipping finished\n";
+    
+    // time end
+    std::chrono::high_resolution_clock::time_point t1 = std::chrono::high_resolution_clock::now();
+    std::chrono::milliseconds ms = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0);
+    //std::cout << ms.count() << "ms\n"; // !  (unsigned int) = ms.count()
+    //
 
     //
     // count sucess or delay
     //
-    bool check = mission[0]->sum > mission[0]->deadline;// 1 delay 0 sucess
+    //bool check = mission[0]->sum > mission[0]->deadline;// 1 delay 0 sucess
+    bool check = ms.count() > mission[0]->deadline;// 1 delay 0 sucess
     if (check) {
         //printf("Ship %s delay\n", mission[0]->ship);
         delay++;
